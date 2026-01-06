@@ -15,13 +15,20 @@ public class PessoaController {
         this.dataSource = dataSource;
     }
 
-    public PessoaController create(CobrancaDataSource dataSource) {
+    public static PessoaController create(CobrancaDataSource dataSource) {
+        // validar se o banco de dados conecta
+        dataSource.ping();
         return new PessoaController(dataSource);
     }
 
+    public NovaPessoaResponse novaPessoa(String nome, String identificacao) {
+        NovaPessoaRequest r = new NovaPessoaRequest(nome, identificacao);
+        return this.novaPessoa(r);
+    }
+
     public NovaPessoaResponse novaPessoa(NovaPessoaRequest request) {
-        PessoaGateway gateway = new PessoaGateway(dataSource);
-        NovaPessoaUseCase useCase = new NovaPessoaUseCase(gateway);
+        PessoaGateway pessoaGateway = new PessoaGateway(this.dataSource);
+        NovaPessoaUseCase useCase = new NovaPessoaUseCase(pessoaGateway);
         var novaPessoa = useCase.run(request.nome(), request.identificacao());
         return PessoaPresenter.toResponse(novaPessoa);
     }

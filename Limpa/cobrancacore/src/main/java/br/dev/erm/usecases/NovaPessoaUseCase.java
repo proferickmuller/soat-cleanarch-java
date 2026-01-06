@@ -19,7 +19,9 @@ public class NovaPessoaUseCase {
     ) {
         PessoaEntity pessoa = pessoaGateway.porIdentificacao(identificacao);
         if (pessoa != null) {
-            throw new NovaPessoaIdentificacaoJaExistenteException("Identificação já existente: " + identificacao);
+            throw new NovaPessoaIdentificacaoJaExistenteException(
+                    "Identificação já existente: " + identificacao
+            );
         }
 
         PessoaEntity novaPessoa = new PessoaEntity();
@@ -30,6 +32,7 @@ public class NovaPessoaUseCase {
             pessoaGateway.registrar(novaPessoa);
         }
         catch (PessoaGatewayError e) {
+            // gravar o erro no log aqui se necessário
             throw new NovaPessoaOperationException("Erro ao salvar nova pessoa: " + e.getMessage());
         }
 

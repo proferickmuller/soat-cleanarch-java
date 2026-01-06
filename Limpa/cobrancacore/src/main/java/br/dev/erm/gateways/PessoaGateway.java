@@ -14,7 +14,7 @@ public class PessoaGateway {
     }
 
     public PessoaEntity porIdentificacao(String identificacao) throws PessoaGatewayError {
-        PessoaDTO pessoaDTO = dataSource.obterPessoaPorIdentificacao(identificacao);
+        PessoaDTO pessoaDTO = this.dataSource.obterPessoaPorIdentificacao(identificacao);
         if (pessoaDTO == null) {
             return null;
         }
@@ -30,6 +30,6 @@ public class PessoaGateway {
                 novaPessoa.getNome(),
                 novaPessoa.getIdentificacao()
         );
-        dataSource.novaPessoa(p);
+        this.dataSource.novaPessoa(p);
     }
 }

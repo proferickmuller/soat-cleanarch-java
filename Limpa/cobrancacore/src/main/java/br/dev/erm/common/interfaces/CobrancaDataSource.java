@@ -6,4 +6,5 @@ public interface CobrancaDataSource
 {
     PessoaDTO obterPessoaPorIdentificacao(String identificacao);
     void novaPessoa(PessoaDTO p);
+    void ping();
 }
